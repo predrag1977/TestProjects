@@ -5,16 +5,17 @@ import { Container, TextField } from "@mui/material";
 import CharacterCard from "../components/CharacterCard";
 import { Character } from "../types/Character";
 import { useState } from "react";
+import { searchingTextFromLocalStorage, setSearchingTextToLocalStorage } from "../services/localStorage/LocalStorage";
 
 export default function CharactersPage() {
     const {data} = useFetchCharacters()
-    const [searchingText, setSearchingText] = useState("")
+    const [searchingText, setSearchingText] = useState(searchingTextFromLocalStorage)
 
     return (
         <>
         <Header/>
         <Container sx={{width:"100%", textAlign:"right"}}>
-            <TextField id="outlined-search" label="Search characters" type="search" sx={{margin:"10px"}} onChange={(e) => setSearchingText(e.target.value)} />
+            <TextField id="outlined-search" value={searchingText} label="Search characters" type="search" sx={{margin:"10px"}} onChange={(e) => {setSearchingText(e.target.value); setSearchingTextToLocalStorage(e.target.value);}} />
         </Container>
         <Container style={{width:"100%", textAlign:"center"}}>
         {

@@ -1,98 +1,69 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from "../services/authentication/Firebase";
-import { setToken, setUserCredential } from '../services/localStorage/LocalStorage';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, signUp } from "../services/authentication/Firebase";
+import { Button } from '@mui/material';
 
 export default function SignUp() {
-        const navigate = useNavigate();
-    
-        const [email, setEmail] = useState('')
-        const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-        const token = localStorage.getItem("userToken") ?? "";
-        console.log(token);
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('');
     
-        const onSubmit = async (e: { preventDefault: () => void; }) => {
-          e.preventDefault()
-
-          await signInWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
-            const token = await userCredential.user.getIdToken()
-            console.log(token)
-            setUserCredential(email, password)
-            setToken(token)
-          }).catch((error) => {
-            navigate("/signup")
-          })
-    
-        //   await createUserWithEmailAndPassword(auth, email, password)
-        //     .then((userCredential) => {
-        //         // Signed in
-        //         const user = userCredential.user;
-        //         console.log(user);
-        //         navigate("/login")
-        //         // ...
-        //     })
-        //     .catch((error) => {
-        //         const errorCode = error.code;
-        //         const errorMessage = error.message;
-        //         console.log(errorCode, errorMessage);
-        //         console.log(localStorage.getItem('userToken'));
-                
-        //     });
+    const onSignUp = async () => {
+        let result = await signUp(email, password)
+        if(result) {
+            navigate("/characters")
         }
+    }
     
-      return (
+    return (
+        // TODO: CHANGE THIS FORM WITH MUI COMPONENTS!!!
         <main >        
             <section>
-                <div>
-                    <div>                  
-                        <h1> FocusApp </h1>                                                                            
-                        <form>                                                                                            
-                            <div>
-                                <label htmlFor="email-address">
-                                    Email address
-                                </label>
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}  
-                                    required                                    
-                                    placeholder="Email address"                                
-                                />
-                            </div>
-    
-                            <div>
-                                <label htmlFor="password">
-                                    Password
-                                </label>
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)} 
-                                    required                                 
-                                    placeholder="Password"              
-                                />
-                            </div>                                             
-    
-                            <button
-                                type="submit" 
-                                onClick={onSubmit}                        
-                            >  
-                                Sign up                                
-                            </button>
-    
-                        </form>
-    
-                        <p>
-                            Already have an account?{' '}
-                            <NavLink to="/login" >
-                                Sign in
-                            </NavLink>
-                        </p>                   
-                    </div>
+                <div style={{marginLeft:"30px"}}>                  
+                    <h1>Sign up</h1>                                                                            
+                    <form>                                                                                            
+                        <div style={{marginTop:"10px"}}>
+                            <label htmlFor="email-address">
+                                Email address
+                            </label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}  
+                                required                                    
+                                placeholder="Email address"  
+                                style={{marginLeft:"10px", padding:"5px"}}                              
+                            />
+                        </div>
+
+                        <div style={{marginTop:"10px"}}>
+                            <label htmlFor="password">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required                                 
+                                placeholder="Password" 
+                                style={{marginLeft:"10px", padding:"5px"}}             
+                            />
+                        </div>                                             
+
+                        <Button size="small" sx={{backgroundColor:"grey", color:"white", marginTop:"10px"}} onClick={onSignUp}>Sign Up</Button>
+
+                    </form>
+
+                    <p>
+                        Already have an account?{' '}
+                        <NavLink to="/login" >
+                            Log in
+                        </NavLink>
+                    </p>                   
                 </div>
             </section>
         </main>
-      )
-    }
+    )
+}

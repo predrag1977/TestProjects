@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { userCredential } from "../localStorage/LocalStorage";
+import { getAuth, signInWithEmailAndPassword, deleteUser, signOut, createUserWithEmailAndPassword } from "firebase/auth";
+import { setToken, setUserCredential, userCredential } from "../localStorage/LocalStorage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD8ZZb5TXEo6Qscj4ki8E5MKgS9MOXZSuo",
@@ -21,8 +21,47 @@ export default app;
 
 export async function tryLoginAsync() : Promise<boolean> {
     console.log("tryLoginAsync")
+    const {email, password} = userCredential()
     let success = true
-    await signInWithEmailAndPassword(auth, userCredential.email, userCredential.password).catch((error) => {
+    await signInWithEmailAndPassword(auth, email, password).catch((error) => {
+        console.log(error.code, error.message)
+        success = false
+    })
+    return success
+}
+
+export async function logIn(email: string, password: string) : Promise<boolean> {
+    console.log("logIn")
+    let success = true
+    await signInWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
+        const token = await userCredential.user.getIdToken()
+        setUserCredential(email, password)
+        setToken(token)
+    }).catch((error) => {
+        console.log(error.code, error.message)
+        success = false
+    })
+    return success
+}
+
+export async function logOut() : Promise<boolean> {
+    console.log("logOut")
+    let success = true
+    await signOut(auth).catch((error) => {
+        console.log(error.code, error.message)
+        success = false
+    })
+    return success
+}
+
+export async function signUp(email: string, password: string) : Promise<boolean> {
+    console.log("signUp")
+    let success = true
+    await createUserWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
+        const token = await userCredential.user.getIdToken()
+        setUserCredential(email, password)
+        setToken(token)
+    }).catch((error) => {
         console.log(error.code, error.message)
         success = false
     })

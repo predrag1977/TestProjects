@@ -13,7 +13,7 @@ export default function SingleCharacterPage() {
             isLoading ? "LOADING..." : 
             <>
             <Header />
-            <CharacterCard key={data?.id} character = {data}  />
+            <CharacterCard key={data?.id} character={data}  />
             </>
         }
         </>
