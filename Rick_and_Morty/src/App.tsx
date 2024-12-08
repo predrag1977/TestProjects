@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, useRoutes } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-function App() {
+export default function App() {
+  const Routes = () => useRoutes(AppRoutes)
+  const queryClient = new QueryClient(
+    // {
+    //   defaultOptions: {
+    //     queries: {
+    //       staleTime: Infinity,
+    //     },
+    //   },
+    // }
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <QueryClientProvider contextSharing={true} client={queryClient}>
+      <BrowserRouter> 
+            <Routes />
+        </BrowserRouter>
+    </QueryClientProvider>
+    
+  )
 }
-
-export default App;
