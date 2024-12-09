@@ -3,6 +3,7 @@ import { QueryObserverResult, useQuery } from "react-query";
 import { RickAndMarty } from "../../types/RickAndMarty";
 import { Character } from "../../types/Character";
 import { Location } from "../../types/Location";
+import { Episode } from "../../types/Episode";
 
 const BASE_URL = 'https://rickandmortyapi.com'
 
@@ -67,6 +68,39 @@ export function useFetchLocationCharacters(location:Location | undefined): Query
     });
 };
 
+export function useFetchSingleEpisode(id: string): QueryObserverResult<Episode, any> {
+    return useQuery<Episode, any>({
+        queryKey:["SingleEpisode"],
+        queryFn: async () => {
+            const { data } = await fetchSingleEpisodeAsync(id)
+            console.log(data)
+            return data;
+        }
+    });
+};
+
+export function useFetchEpisodeCharacters(episode: Episode | undefined): QueryObserverResult<Character[], any> {
+    return useQuery<Character[], any>({
+        queryKey:["EpisodeCharacters"],
+        queryFn: async () => {
+            const charatersIDs = (): string[] => {
+                var ids: string[] = []
+                episode?.characters?.forEach((character: string) => {
+                    let id = character.split("/").pop()
+                    if((id?.length ?? 0) > 0) {
+                        ids.push(id!)
+                    }
+                })
+                return ids
+            }
+            const { data } = await fetchEpisodeCharactersAsync(charatersIDs())
+            console.log(data)
+            return data
+        },
+        enabled: !!episode
+    });
+};
+
 async function fetchCharactersAsync(): Promise<AxiosResponse<RickAndMarty, any>> {
     return await client.get<RickAndMarty>(`${BASE_URL}/api/character`)
 };
@@ -80,5 +114,14 @@ async function fetchSingleLocationAsync(url:string): Promise<AxiosResponse<Locat
 }
 
 async function fetchLocationCharactersAsync(charatersIDs:string[]): Promise<AxiosResponse<Character[], any>> {
+    return await client.get<Character[]>(`${BASE_URL}/api/character/${charatersIDs.join(',')}`)
+}
+
+async function fetchSingleEpisodeAsync(id:string): Promise<AxiosResponse<Episode, any>> {
+    return await client.get<Episode>(`${BASE_URL}/api/episode/${id}`)
+};
+
+async function fetchEpisodeCharactersAsync(charatersIDs:string[]): Promise<AxiosResponse<Character[], any>> {
+    console.log(charatersIDs)
     return await client.get<Character[]>(`${BASE_URL}/api/character/${charatersIDs.join(',')}`)
 }

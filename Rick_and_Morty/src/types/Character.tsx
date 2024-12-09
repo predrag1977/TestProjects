@@ -6,4 +6,5 @@ export interface Character {
     gender: string
     species: string
     location: Location
+    episode: string[]
 }

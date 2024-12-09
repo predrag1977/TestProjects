@@ -1,5 +1,3 @@
-import { Character } from "./Character"
-
 export interface Location {
     name: string
     url: string

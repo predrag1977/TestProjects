@@ -23,7 +23,7 @@ export default function CharacterDetails({character}: Character | any)  {
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small" onClick={(e) => {navigate("/location", {state:{locationUrl: character.location.url}}); e.preventDefault()} }>Location</Button>
+            <Button size="small" onClick={(e) => {navigate("/location", {state:{locationUrl: character.location.url}})} }>Location</Button>
         </CardActions>
     </Card>
     )
