@@ -1,5 +1,5 @@
-
 import CharactersPage from "../pages/CharactersPage";
+import LocationPage from "../pages/LocationPage";
 import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
 import SingleCharacterPage from "../pages/SingleCharacterPage";
@@ -25,6 +25,10 @@ const AppRoutes = [
     {
         path: '/characters/:id?',
         element: <SingleCharacterPage />
+    },
+    {
+        path: '/location',
+        element: <LocationPage />
     }
 ]
 

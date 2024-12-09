@@ -5,4 +5,5 @@ export interface Character {
     status: string
     gender: string
     species: string
+    location: Location
 }

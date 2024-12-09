@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, signUp } from "../services/authentication/Firebase";
+import { signUp } from "../services/authentication/Firebase";
 import { Button } from '@mui/material';
 
 export default function SignUp() {

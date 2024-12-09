@@ -11,6 +11,13 @@ export default function CharactersPage() {
     const {data} = useFetchCharacters()
     const [searchingText, setSearchingText] = useState(searchingTextFromLocalStorage)
 
+    const filteredCharacters = (characters: Character[] | undefined, searchingText: string) : Character[] => {
+        const list = characters?.filter((character) => 
+            character.name.toLowerCase().startsWith(searchingText.toLowerCase())
+        )
+        return list ?? []
+    }
+
     return (
         <>
         <Header/>
@@ -28,10 +35,5 @@ export default function CharactersPage() {
     )
 }
 
-const filteredCharacters = (characters: Character[] | undefined, searchingText: string) : Character[] => {
-    const list = characters?.filter((character) => 
-        character.name.toLowerCase().startsWith(searchingText.toLowerCase())
-    )
-    return list ?? []
-}
+
   

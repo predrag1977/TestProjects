@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useFetchSingleCharacter } from "../services/loader/Loader";
-import CharacterCard from "../components/CharacterCard";
 import Header from "../components/Header";
+import CharacterDetails from "../components/CharacterDetails";
 
 export default function SingleCharacterPage() {
     const { id } = useParams()
@@ -13,7 +13,7 @@ export default function SingleCharacterPage() {
             isLoading ? "LOADING..." : 
             <>
             <Header />
-            <CharacterCard key={data?.id} character={data}  />
+            <CharacterDetails character={data}  />
             </>
         }
         </>
