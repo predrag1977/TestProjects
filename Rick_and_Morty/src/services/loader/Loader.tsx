@@ -4,12 +4,14 @@ import { RickAndMarty } from "../../types/RickAndMarty";
 import { Character } from "../../types/Character";
 import { Location } from "../../types/Location";
 import { Episode } from "../../types/Episode";
+import { token } from "../localStorage/LocalStorage";
 
 const BASE_URL = 'https://rickandmortyapi.com'
 
 export const client = axios.create({
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token()}`
     }
 })
 
@@ -122,6 +124,5 @@ async function fetchSingleEpisodeAsync(id:string): Promise<AxiosResponse<Episode
 };
 
 async function fetchEpisodeCharactersAsync(charatersIDs:string[]): Promise<AxiosResponse<Character[], any>> {
-    console.log(charatersIDs)
     return await client.get<Character[]>(`${BASE_URL}/api/character/${charatersIDs.join(',')}`)
 }
