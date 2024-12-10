@@ -5,6 +5,7 @@ import { Character } from "../../types/Character";
 import { Location } from "../../types/Location";
 import { Episode } from "../../types/Episode";
 import { token } from "../localStorage/LocalStorage";
+import { checkAuthentication} from "../authentication/Firebase";
 
 const BASE_URL = 'https://rickandmortyapi.com'
 
@@ -22,7 +23,8 @@ export function useFetchCharacters(): QueryObserverResult<RickAndMarty, any> {
             const { data } = await fetchCharactersAsync()
             console.log(data)
             return data;
-        }
+        },
+        enabled : checkAuthentication()
     });
 };
 
@@ -33,7 +35,7 @@ export function useFetchSingleCharacter(id: string): QueryObserverResult<Charact
             const { data } = await fetchSingleCharacterAsync(id)
             console.log(data)
             return data;
-        }
+        }, enabled : checkAuthentication()
     });
 };
 
@@ -44,7 +46,8 @@ export function useFetchSingleLocation(url: string): QueryObserverResult<Locatio
             const { data } = await fetchSingleLocationAsync(url)
             console.log(data)
             return data;
-        }
+        },
+        enabled : checkAuthentication()
     });
 };
 
@@ -66,7 +69,7 @@ export function useFetchLocationCharacters(location:Location | undefined): Query
             console.log(data)
             return data
         },
-        enabled: !!location
+        enabled: !!location && checkAuthentication()
     });
 };
 
@@ -77,7 +80,8 @@ export function useFetchSingleEpisode(id: string): QueryObserverResult<Episode, 
             const { data } = await fetchSingleEpisodeAsync(id)
             console.log(data)
             return data;
-        }
+        },
+        enabled : checkAuthentication()
     });
 };
 
@@ -99,7 +103,7 @@ export function useFetchEpisodeCharacters(episode: Episode | undefined): QueryOb
             console.log(data)
             return data
         },
-        enabled: !!episode
+        enabled: !!episode && checkAuthentication()
     });
 };
 

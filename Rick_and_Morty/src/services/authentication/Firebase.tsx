@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
-import { setToken, setUserCredential, userCredential } from "../localStorage/LocalStorage";
+import { setToken, setUserCredential, token, userCredential } from "../localStorage/LocalStorage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD8ZZb5TXEo6Qscj4ki8E5MKgS9MOXZSuo",
@@ -66,4 +66,8 @@ export async function signUp(email: string, password: string) : Promise<boolean>
         success = false
     })
     return success
+}
+
+export function checkAuthentication() : boolean {
+    return token().length > 0
 }
