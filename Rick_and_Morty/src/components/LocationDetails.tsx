@@ -1,5 +1,5 @@
 import { Card, CardContent, Container, Typography} from "@mui/material"
-import { useFetchLocationCharacters } from "../services/loader/Loader"
+import { useFetchLocationCharacters } from "../services/api/API"
 import { Character } from "../types/Character"
 import CharacterCard from "./CharacterCard"
 

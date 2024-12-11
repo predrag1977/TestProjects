@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useFetchSingleCharacter } from "../services/loader/Loader";
+import { useFetchSingleCharacter } from "../services/api/API";
 import Header from "../components/Header";
 import CharacterDetails from "../components/CharacterDetails";
 import { Button, Typography } from "@mui/material";

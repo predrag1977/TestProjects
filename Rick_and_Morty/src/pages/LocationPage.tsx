@@ -1,5 +1,5 @@
 import { useLocation} from "react-router-dom"
-import { useFetchSingleLocation } from "../services/loader/Loader"
+import { useFetchSingleLocation } from "../services/api/API"
 import Header from "../components/Header"
 import { LocationDetails } from "../components/LocationDetails"
 

@@ -1,6 +1,6 @@
 
 import Header from "../components/Header";
-import { useFetchCharacters } from "../services/loader/Loader";
+import { useFetchCharacters } from "../services/api/API";
 import { Container, TextField } from "@mui/material";
 import CharacterCard from "../components/CharacterCard";
 import { Character } from "../types/Character";

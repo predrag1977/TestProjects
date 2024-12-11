@@ -1,5 +1,5 @@
 import { Container } from "@mui/material"
-import { useFetchEpisodeCharacters } from "../services/loader/Loader"
+import { useFetchEpisodeCharacters } from "../services/api/API"
 import { Character } from "../types/Character"
 import CharacterCard from "./CharacterCard"
 import { Episode } from "../types/Episode"

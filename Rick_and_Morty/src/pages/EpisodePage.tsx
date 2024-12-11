@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { Typography, Card, CardContent, Container } from "@mui/material";
-import { useFetchSingleEpisode } from "../services/loader/Loader";
+import { useFetchSingleEpisode } from "../services/api/API";
 import { EpisodeCharacters } from "../components/EpisodeCharacters";
 
 export default function EpisodePage() {
